@@ -23,10 +23,9 @@ export default {
   },
   methods: {
     async fetchData() {
-      const res = await axios.get("http://127.0.0.1:5000/reports")
-      this.report = res.data
-      this.id = res.data.id
-      console.log(res.data)
+      const res = await axios.get("http://127.0.0.1:5000/reports/1")
+      this.reports = res.data
+      console.log(this.reports)
     }
   },
   mounted() {

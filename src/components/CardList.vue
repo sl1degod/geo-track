@@ -1,10 +1,10 @@
 <template>
   <div class="card-container">
-    <div class="card" v-for="report in reports" :key="report.id">
-      <img src="http://127.0.0.1:5000/static/reports/ + {{ report }}" alt="Изображение">
+    <div class="card">
+      <img src="http://127.0.0.1:5000/static/reports/1.jpg" alt="Изображение">
       <div class="card-info">
-        <h3>{{ report }}</h3>
-        <p>{{ report }}</p>
+        <h3>{{ reports.id }}</h3>
+        <p>{{ reports.fio }}</p>
       </div>
     </div>
   </div>
