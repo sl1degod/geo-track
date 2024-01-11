@@ -1,10 +1,11 @@
 <template>
   <div class="card-container">
-    <div class="card">
-      <img src="http://127.0.0.1:5000/static/reports/1.jpg" alt="Изображение">
+    <div class="card" v-for="report in reports" :key="report.id">
+      <h3 style="margin-right: 20px; margin-left: 10px;">{{ report.id }}</h3>
+      <img src="http://127.0.0.1:5000/static/reports/2.jpg" alt="Изображение">
       <div class="card-info">
-        <h3>{{ reports.id }}</h3>
-        <p>{{ reports.fio }}</p>
+        <p>{{ report.fio }}</p>
+        <h3>{{ report.violations }}</h3>
       </div>
     </div>
   </div>
@@ -13,14 +14,22 @@
 <script>
 export default {
   name: "CardList",
-  props: ['reports']
+  props: {
+    reports: {
+      type: Array,
+      required: true
+    }
+  }
 }
 </script>
 
 <style>
 .card-container {
   display: flex;
-  justify-content: center;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  flex-direction: column;
+  align-content: center;
 }
 
 .card {
@@ -50,8 +59,5 @@ export default {
 .card p {
   color: white;
 }
-
-
-
 
 </style>

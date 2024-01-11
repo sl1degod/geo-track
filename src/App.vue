@@ -30,9 +30,8 @@ export default {
 
 .app {
   padding: 20px;
-
   background: #1a1a1a;
-  height: 100vh;
+  height: 100%;
 }
 
 
