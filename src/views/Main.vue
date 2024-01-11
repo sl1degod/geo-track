@@ -15,7 +15,8 @@ export default {
   name: 'MainView',
   data() {
     return {
-      reports: []
+      reports: [],
+
     }
   },
   components: {

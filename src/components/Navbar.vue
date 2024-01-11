@@ -6,6 +6,7 @@
     <div class="navigation">
       <a @click="$router.push('/objects')">Объекты</a>
       <a @click="$router.push('/about')">О продукте</a>
+      <button class="sign_btn">Войти</button>
     </div>
   </div>
 
@@ -49,7 +50,7 @@ export default {
   height: 50px;
   display: flex;
   align-items: center;
-  margin-right: 200px;
+  margin-right: 50px;
   padding: 0 15px;
 }
 
@@ -62,6 +63,13 @@ export default {
 
 .navigation a:hover {
   border-bottom: solid white 1px;
+}
+
+.sign_btn {
+  margin-left: 100px;
+  color: white;
+  border: solid 2px white;
+  padding: 5px;
 }
 
 </style>
