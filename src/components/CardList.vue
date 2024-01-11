@@ -2,7 +2,7 @@
   <div class="card-container">
     <div class="card" v-for="report in reports" :key="report.id">
       <h3 style="margin-right: 20px; margin-left: 10px;">{{ report.id }}</h3>
-      <img src="http://127.0.0.1:5000/static/reports/2.jpg" alt="Изображение">
+      <img :src="`http://127.0.0.1:5000/static/reports/` + report.violations_image"  alt="Изображение">
       <div class="card-info">
         <p>{{ report.fio }}</p>
         <h3>{{ report.violations }}</h3>
@@ -18,6 +18,11 @@ export default {
     reports: {
       type: Array,
       required: true
+    }
+  },
+  computed: {
+    getImages() {
+      return this.reports.violations_image
     }
   }
 }
