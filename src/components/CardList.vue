@@ -1,10 +1,10 @@
 <template>
   <div class="card-container">
-    <div class="card">
-      <img src="your-image.jpg" alt="Изображение">
+    <div class="card" v-for="report in reports" :key="report.id">
+      <img src="http://127.0.0.1:5000/static/reports/ + {{ report }}" alt="Изображение">
       <div class="card-info">
-        <h3 v-bind:>{{ report.id }}</h3>
-        <p>121</p>
+        <h3>{{ report }}</h3>
+        <p>{{ report }}</p>
       </div>
     </div>
   </div>
@@ -13,12 +13,7 @@
 <script>
 export default {
   name: "CardList",
-  props: {
-    report: {
-      type: Object,
-      required: true
-    }
-  }
+  props: ['reports']
 }
 </script>
 

@@ -1,7 +1,7 @@
 <template>
   <div class="main">
     <div class="reports">
-      <card-list/>
+      <card-list :reports="reports"/>
     </div>
   </div>
 </template>
@@ -15,17 +15,7 @@ export default {
   name: 'MainView',
   data() {
     return {
-      report: {
-        id: "",
-        fio: "",
-        violations: "",
-        object: "",
-        latitude: "",
-        longitude: "",
-        violations_image: "",
-        date: "",
-        time: ""
-      }
+      reports: []
     }
   },
   components: {
@@ -33,8 +23,10 @@ export default {
   },
   methods: {
     async fetchData() {
-      const res = await axios.get("http://127.0.0.1:5000/reports/1")
+      const res = await axios.get("http://127.0.0.1:5000/reports")
       this.report = res.data
+      this.id = res.data.id
+      console.log(res.data)
     }
   },
   mounted() {
