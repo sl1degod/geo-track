@@ -27,7 +27,6 @@ export default {
 .nav {
   background: #111111;
   height: 75px;
-  box-shadow: 2px 2px 4px white;
   display: flex;
   align-items: center;
   padding: 0 15px;
@@ -59,11 +58,15 @@ export default {
   color: white;
   margin-left: 20px;
   cursor: pointer;
+  border-bottom: solid transparent 1px;
+  transition-delay: 0.2s;
+  transition-duration: 0.3s;
 }
 
 .navigation a:hover {
-  border-bottom: solid white 1px;
+  border-bottom: solid #ffffff 1px;
 }
+
 
 .sign_btn {
   margin-left: 100px;

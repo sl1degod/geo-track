@@ -57,7 +57,6 @@ export default {
   width: 100%;
   object-fit: fill;
   border-radius: 8px;
-
 }
 
 .image {
