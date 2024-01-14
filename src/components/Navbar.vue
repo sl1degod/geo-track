@@ -73,6 +73,7 @@ export default {
   color: white;
   border: solid 2px white;
   padding: 5px;
+  background: transparent;
 }
 
 </style>

@@ -2,14 +2,15 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
-import 'vuetify/styles'
-import { createVuetify } from 'vuetify'
-import * as components from 'vuetify/components'
-import * as directives from 'vuetify/directives'
+import YmapPlugin from 'vue-yandex-maps';
 
-const vuetify = createVuetify({
-    components,
-    directives,
-})
 
-createApp(App).use(vuetify).use(store).use(router).mount('#app')
+const settings = {
+    apiKey: '6f0f8a24-25f9-4b00-97e6-c58810316041',
+    lang: 'ru_RU',
+    coordorder: 'latlong',
+    debug: false,
+    version: '2.1'
+}
+
+createApp(App).use(YmapPlugin, settings).use(store).use(router).mount('#app')
