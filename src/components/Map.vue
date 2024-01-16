@@ -3,24 +3,28 @@
     <YandexMap :coordinates="coordinates"
                :zoom="14"
                :controls="controls"
-               map-type="map">
+               map-type="map"
+               @click="addNewObject">
       <YandexMarker v-for="object in objects"
                     :key="object.id"
                     :coordinates="[object.latitude, object.longitude]"
                     type="Point"
-                    marker-id="object.id">
+                    marker-id="object.id"
+                    options="hint">
       </YandexMarker>
     </YandexMap>
+    <object-form v-show="isVisible"/>
   </div>
 </template>
-
 <script>
 import { YandexMap, YandexMarker } from "vue-yandex-maps";
 import axios from "axios";
+import ObjectForm from "@/components/ObjectForm.vue";
+
 
 export default {
   name: 'yandex-map-app',
-  components: { YandexMap, YandexMarker },
+  components: {ObjectForm, YandexMap, YandexMarker },
   data() {
     return {
       objects: [],
@@ -28,6 +32,9 @@ export default {
       controls: [
         'fullscreenControl'
       ],
+      isVisible: false,
+      latitude: event.get('coords')[0],
+      longitude: event.get('coords')[1]
     }
   },
   methods: {
@@ -35,7 +42,25 @@ export default {
       const res = await axios.get("http://127.0.0.1:5000/objects");
       this.objects = res.data;
       console.log(res.data);
+    },
+    addNewObject() {
+      this.isVisible = true
+      // const newObject = {
+      //   id: this.objects.length + 1,
+      //   latitude: event.get('coords')[0],
+      //   longitude: event.get('coords')[1]
+      // };
+      // this.objects.push(newObject);
     }
+    // addNewObject(event) {
+    //   this.dialogVisible = true
+    //   const newObject = {
+    //     id: this.objects.length + 1,
+    //     latitude: event.get('coords')[0],
+    //     longitude: event.get('coords')[1]
+    //   };
+    //   this.objects.push(newObject);
+    // }
   },
   mounted() {
     this.fetchData();
@@ -44,12 +69,12 @@ export default {
 </script>
 
 <style scoped>
+
 .yandex-container {
-  margin-top: 50px;
-  width: 60%;
+  width: 80%;
   height: 600px;
   border: solid white 2px;
-  padding: 10px;
   border-radius: 16px;
+  padding: 10px;
 }
 </style>
