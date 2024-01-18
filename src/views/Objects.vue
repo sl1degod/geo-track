@@ -12,7 +12,6 @@
 </template>
 
 <script>
-
 import YandexMap from "@/components/Map.vue";
 import ObjectsCardList from "@/components/ObjectsCardList.vue";
 import axios from "axios";
@@ -29,8 +28,8 @@ export default {
     async fetchData() {
       const res = await axios.get("http://127.0.0.1:5000/objects")
       this.objects = res.data
-      console.log(res.data)
-    }
+      console.log(this.objects)
+    },
   },
   mounted() {
     this.fetchData();
@@ -40,7 +39,7 @@ export default {
 
 <style scoped>
 .main {
-  height: 100vh;
+  height: 100%;
   color: white;
   display: flex;
 }

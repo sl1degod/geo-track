@@ -4,6 +4,8 @@ import router from './router'
 import store from './store'
 import YmapPlugin from 'vue-yandex-maps';
 
+const app = createApp(App)
+
 
 const settings = {
     apiKey: '6f0f8a24-25f9-4b00-97e6-c58810316041',
@@ -13,4 +15,4 @@ const settings = {
     version: '2.1'
 }
 
-createApp(App).use(YmapPlugin, settings).use(store).use(router).mount('#app')
+app.use(YmapPlugin, settings).use(store).use(router).mount('#app')

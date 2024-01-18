@@ -1,10 +1,20 @@
 <template>
-  <div class="dialog">
-    <div class="dialog-content">
-      <form>
-        <p>Создание объекта</p>
+  <div class="dialog" v-if="show" @click="hideDialog">
+    <div @click.stop class="dialog-content">
+      <form @submit.prevent>
+        <p style="margin-top: 10px; margin-bottom: 20px">Создание объекта</p>
+        <p class="labels">Название объекта</p>
         <input type="text" v-model="objectName" placeholder="Название объекта">
-        <input type="text" placeholder="ФИО ответственного">
+        <p class="labels">Ответственный сотрудник</p>
+        <select v-model="adminId">
+          <option v-for="object in adminId" :key="object.id" :value="object.id">
+            {{ object.firstname + ' ' + object.secondname + ' ' + object.lastname }}
+          </option>
+        </select>
+        <p class="labels">Долгота</p>
+        <input type="text" placeholder="Долгота" :value="longitude">
+        <p class="labels">Широта</p>
+        <input type="text" placeholder="Широта" :value="latitude">
         <button @click="createObject">Добавить</button>
       </form>
     </div>
@@ -20,6 +30,7 @@ export default {
   data() {
     return {
       objectName: "",
+      adminId: [],
     }
   },
   props: {
@@ -31,18 +42,39 @@ export default {
       type: String,
       required: true
     },
+    show: {
+      type: Boolean,
+      required: true
+    },
+    afterClick: {
+      type: Boolean,
+      required: true
+    }
   },
   methods: {
     async createObject() {
       const data = {
         name: this.objectName,
-        // longitude: this.longitude,
-        // latitude: this.latitude
+        longitude: this.longitude,
+        latitude: this.latitude,
+        admin: this.adminId
       };
       const res = await axios.post("http://127.0.0.1:5000/objects", data);
-      this.objects = res.data;
       console.log(res.data);
+      this.$emit('update:show', false)
+      window.location.reload();
     },
+    hideDialog() {
+      this.$emit('update:show', false)
+    },
+    async fetchData() {
+      const res = await axios.get("http://127.0.0.1:5000/users")
+      this.adminId = res.data
+      console.log(this.objects)
+    },
+  },
+  mounted() {
+    this.fetchData()
   }
 }
 </script>
@@ -56,9 +88,12 @@ form {
 
 p {
   font-size: 20px;
-  margin-top: 30px;
   text-align: center;
-  margin-bottom: 50px;
+}
+
+.labels {
+  font-size: 16px;
+  margin-top: 10px;
 }
 
 input {
@@ -66,10 +101,18 @@ input {
   width: 200px;
   height: 40px;
   border-radius: 12px;
-  margin-top: 20px;
+  margin-top: 10px;
   align-items: center;
   padding: 10px;
+  margin-bottom: 10px;
+}
 
+select {
+  margin-top: 10px;
+  width: 200px;
+  height: 40px;
+  border-radius: 12px;
+  padding: 10px;
 }
 
 input:active {
@@ -101,9 +144,10 @@ button {
   margin: auto;
   background: #1a1a1a;
   border-radius: 12px;
-  min-height: 400px;
-  min-width: 300px;
+  min-height: 500px;
+  min-width: 400px;
   padding: 20px;
 }
+
 
 </style>
