@@ -1,5 +1,6 @@
 <template>
   <div class="main">
+    <p style="color: white; font-size: 30px; margin-bottom: 20px; text-align: center">Список актов</p>
     <div class="reports">
       <card-list :reports="reports"/>
     </div>

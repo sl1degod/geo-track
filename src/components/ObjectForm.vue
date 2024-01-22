@@ -7,10 +7,12 @@
         <input type="text" v-model="objectName" placeholder="Название объекта">
         <p class="labels">Ответственный сотрудник</p>
         <select v-model="adminId">
-          <option v-for="object in adminId" :key="object.id" :value="object.id">
-            {{ object.firstname + ' ' + object.secondname + ' ' + object.lastname }}
+          <option v-for="admin in admins" :key="admin.id" :value="admin.id">
+            {{ admin.firstname + ' ' + admin.secondname + ' ' + admin.lastname }}
           </option>
         </select>
+        <p class="labels">Выберите изображение</p>
+        <input type="file" @change="onFileChange">
         <p class="labels">Долгота</p>
         <input type="text" placeholder="Долгота" :value="longitude">
         <p class="labels">Широта</p>
@@ -25,12 +27,14 @@
 <script>
 import axios from "axios";
 
+
 export default {
   name: "object-form",
   data() {
     return {
       objectName: "",
-      adminId: [],
+      admins: [],
+      adminId: ''
     }
   },
   props: {
@@ -53,24 +57,30 @@ export default {
   },
   methods: {
     async createObject() {
-      const data = {
-        name: this.objectName,
-        longitude: this.longitude,
-        latitude: this.latitude,
-        admin: this.adminId
-      };
-      const res = await axios.post("http://127.0.0.1:5000/objects", data);
-      console.log(res.data);
+      const formData = new FormData();
+      formData.append('name', this.objectName);
+      formData.append('latitude', this.latitude);
+      formData.append('longitude', this.longitude);
+      formData.append('uuid_image', this.selectedFile);
+      formData.append('admin', this.adminId);
+      this.$store.dispatch('createObject', formData);
       this.$emit('update:show', false)
-      window.location.reload();
+      this.adminId = ''
+      this.objectName = ''
     },
     hideDialog() {
       this.$emit('update:show', false)
+      this.adminId = ''
+      this.objectName = ''
     },
     async fetchData() {
       const res = await axios.get("http://127.0.0.1:5000/users")
-      this.adminId = res.data
-      console.log(this.objects)
+      this.admins = res.data
+      console.log(this.admins)
+    },
+    onFileChange(event) {
+      const file = event.target.files[0];
+      this.selectedFile = file;
     },
   },
   mounted() {

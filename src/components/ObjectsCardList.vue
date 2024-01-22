@@ -6,7 +6,7 @@
          :key="objects.id">
       <h3 style="margin-right: 20px; margin-left: 10px; width: 20px">{{ objects.id }}</h3>
       <div class="image">
-        <img :src="'http://127.0.0.1:5000/static/objects/' + objects.uuid_image + '.jpg'"  alt="Изображение">
+        <img :src="'http://127.0.0.1:5000/static/objects/' + objects.uuid_image"  alt="Изображение">
       </div>
       <div class="card-info">
         <p>{{ objects.name }}</p>
@@ -24,7 +24,7 @@ export default {
   props: {
     objects: {
       type: Array,
-      required: true
+      default: () => []
     }
   },
 

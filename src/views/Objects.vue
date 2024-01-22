@@ -3,10 +3,13 @@
     <div class="map-container">
       <p>Карта</p>
       <yandex-map/>
+      <p style="font-size: 14px">*Для того, чтобы добавить новый объект, нажмите на нужное вам место на карте</p>
     </div>
     <div class="objects-container">
       <p>Объекты</p>
-      <objects-card-list :objects="objects" class="card-list"/>
+      <transition-group name="object-list">
+      <objects-card-list :objects="getObjects" class="card-list"/>
+      </transition-group>
     </div>
   </div>
 </template>
@@ -14,7 +17,8 @@
 <script>
 import YandexMap from "@/components/Map.vue";
 import ObjectsCardList from "@/components/ObjectsCardList.vue";
-import axios from "axios";
+import {mapGetters} from "vuex";
+
 
 export default {
   name: "objects-view",
@@ -26,13 +30,19 @@ export default {
   },
   methods: {
     async fetchData() {
-      const res = await axios.get("http://127.0.0.1:5000/objects")
-      this.objects = res.data
-      console.log(this.objects)
+      this.$store.dispatch('fetchObjects');
+      this.objects = this.getObjects;
     },
+  },
+  computed: {
+    ...mapGetters({
+      getObjects: 'getObjects'
+    })
   },
   mounted() {
     this.fetchData();
+    console.log(123)
+    console.log(this.objects)
   }
 }
 </script>
@@ -59,5 +69,23 @@ export default {
   margin-bottom: 20px;
   font-size: 30px;
 }
+
+.object-list-item {
+  display: inline-block;
+  margin-right: 10px;
+}
+.object-list-enter-active,
+.object-list-leave-active {
+  transition: all 0.5s ease;
+}
+.object-list-enter-from,
+.object-list-leave-to {
+  opacity: 0;
+  transform: translateX(130px);
+}
+.object-list-move {
+  transition: all 0.5s ease;
+}
+
 
 </style>
