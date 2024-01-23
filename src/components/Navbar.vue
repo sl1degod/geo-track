@@ -6,7 +6,7 @@
     <div class="navigation">
       <a @click="$router.push('/objects')">Объекты</a>
       <a @click="$router.push('/about')">О продукте</a>
-      <button class="sign_btn">Войти</button>
+      <button class="sign_btn" @click="$router.push('/login')">Войти</button>
     </div>
   </div>
 
@@ -67,13 +67,13 @@ export default {
   border-bottom: solid #ffffff 1px;
 }
 
-
 .sign_btn {
   margin-left: 100px;
   color: white;
   border: solid 2px white;
   padding: 5px;
   background: transparent;
+  cursor: pointer;
 }
 
 </style>
