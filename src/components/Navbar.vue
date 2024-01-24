@@ -1,6 +1,6 @@
 <template>
   <div class="nav">
-    <div class="logo" @click="$router.push('/')">
+    <div class="logo" @click="$router.push('/reports')">
       Geo Track
     </div>
     <div class="navigation">
@@ -13,8 +13,6 @@
 </template>
 
 <script>
-
-
 
 export default {
   name: "app-navbar",

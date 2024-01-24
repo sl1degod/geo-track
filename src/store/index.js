@@ -4,7 +4,6 @@ import axios from "axios";
 export default createStore({
   state: {
     objects: [],
-
   },
   getters: {
     getObjects(state) {
@@ -21,13 +20,15 @@ export default createStore({
   },
   actions: {
     async fetchObjects({ commit }) {
-      const res = await axios.get("http://127.0.0.1:5000/objects");
+      const res = await axios.get("http://127.0.0.1:5000/objects", {headers: {
+        'Authorization': `Bearer ${localStorage.access_token}`}});
       commit('setObjects', res.data);
       console.log(res.data)
 
     },
     async createObject({ commit, dispatch }, newObject) {
-      const res = await axios.post("http://127.0.0.1:5000/objects", newObject);
+      const res = await axios.post("http://127.0.0.1:5000/objects", {headers: {
+          'Authorization': `Bearer ${localStorage.access_token}`}}, newObject);
       commit('addObject', res.data);
       dispatch('fetchObjects')
     }

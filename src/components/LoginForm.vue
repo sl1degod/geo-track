@@ -3,47 +3,73 @@
     <div class="form">
       <p>Авторизация</p>
       <div class="input">
-        <input type="text" placeholder="Логин">
-        <input type="text" placeholder="Пароль">
+        <input type="text" placeholder="Логин" v-model="loginUser">
+        <input type="text" placeholder="Пароль" v-model="passwordUser">
       </div>
-      <button>Войти</button>
+      <button class="sign_btn" @click.prevent="login">Войти</button>
     </div>
   </div>
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
-  name: "login-form"
+  name: "login-form",
+  data() {
+    return {
+      loginUser: null,
+      passwordUser: null,
+      error: ''
+    }
+  },
+  methods: {
+    login() {
+      axios.post('http://127.0.0.1:5000/login', {login: this.loginUser, password: this.passwordUser})
+          .then(res => {
+            localStorage.access_token = res.data.token;
+            console.log(localStorage.access_token);
+            this.$router.push('/reports');
+          })
+          .catch(() => {
+            this.error = ""
+          })
+    }
+  }
 }
 </script>
 
 <style scoped>
 .main {
   display: flex;
-
+  justify-content: center;
 }
 
 .form {
-  margin: auto;
-  background: black;
+  margin-top: 5%;
+  display: flex;
+  flex-direction: column;
+  background: #111111;
   border-radius: 12px;
-  min-height: 500px;
-  min-width: 400px;
-  border: 2px solid black;
+  height: 450px;
+  width: 400px;
+  border: 2px solid white;
   padding: 20px;
+  align-items: center;
 }
 
 .form p {
   font-size: 20px;
   color: #FFFFFF;
   text-align: center;
-  margin-top: 10px;
+  margin-top: 50px;
   margin-bottom: 30px;
 }
 
 .input {
   display: flex;
   flex-direction: column;
+  margin-top: 20px;
 }
 
 input {
@@ -55,5 +81,16 @@ input {
   align-items: center;
   padding: 10px;
   margin-bottom: 10px;
+}
+
+.sign_btn {
+  margin-top: 80px;
+  height: 40px;
+  width: 100px;
+  border-radius: 12px;
+  border: 2px solid white;
+  background: transparent;
+  color: white;
+  cursor: pointer;
 }
 </style>

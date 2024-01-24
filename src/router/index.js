@@ -8,11 +8,15 @@ import Login from "@/views/Login.vue";
 const routes = [
   {
     path: '/',
-    component: Main
+    redirect: '/login'
   },
   {
     path: '/login',
     component: Login
+  },
+  {
+    path: '/reports',
+    component: Main
   },
   {
     path: '/about',

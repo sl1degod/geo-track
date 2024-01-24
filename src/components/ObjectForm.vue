@@ -74,7 +74,8 @@ export default {
       this.objectName = ''
     },
     async fetchData() {
-      const res = await axios.get("http://127.0.0.1:5000/users")
+      const res = await axios.get("http://127.0.0.1:5000/users", {headers: {
+          'Authorization': `Bearer ${localStorage.access_token}`}})
       this.admins = res.data
       console.log(this.admins)
     },
