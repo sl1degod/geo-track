@@ -6,7 +6,7 @@
     <div class="navigation">
       <a @click="$router.push('/objects')">Объекты</a>
       <a @click="$router.push('/about')">О продукте</a>
-      <button class="sign_btn" @click="$router.push('/login')">Войти</button>
+      <button class="sign_btn" @click.prevent="logout" v-show="getAuthStatus">Выйти</button>
     </div>
   </div>
 
@@ -14,10 +14,29 @@
 
 <script>
 
+import {mapGetters} from "vuex";
+
 export default {
   name: "app-navbar",
-  components: {
+  data() {
+    return {
+    }
   },
+  methods: {
+    logout() {
+      this.$store.state.token = null
+      this.$store.dispatch('changeAuthStatus', false);
+      this.$router.push('/login');
+    }
+  },
+  computed: {
+    ...mapGetters({
+      getAuthStatus: 'getIsAuthorized'
+    })
+  },
+  mounted() {
+    this.isAuth = this.getAuthStatus
+  }
 }
 </script>
 

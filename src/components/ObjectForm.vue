@@ -63,7 +63,7 @@ export default {
       formData.append('longitude', this.longitude);
       formData.append('uuid_image', this.selectedFile);
       formData.append('admin', this.adminId);
-      this.$store.dispatch('createObject', formData);
+      this.$store.dispatch('createObject', { newObject: formData, token: this.$store.state.token });
       this.$emit('update:show', false)
       this.adminId = ''
       this.objectName = ''
@@ -75,7 +75,7 @@ export default {
     },
     async fetchData() {
       const res = await axios.get("http://127.0.0.1:5000/users", {headers: {
-          'Authorization': `Bearer ${localStorage.access_token}`}})
+          'Authorization': `Bearer ${this.$store.state.token}`}})
       this.admins = res.data
       console.log(this.admins)
     },

@@ -8,7 +8,7 @@
     <div class="objects-container">
       <p>Объекты</p>
       <transition-group name="object-list">
-      <objects-card-list :objects="getObjects" class="card-list"/>
+        <objects-card-list :objects="getObjects" class="card-list"/>
       </transition-group>
     </div>
   </div>
@@ -30,7 +30,7 @@ export default {
   },
   methods: {
     async fetchData() {
-      this.$store.dispatch('fetchObjects');
+      this.$store.dispatch('fetchObjects', this.$store.state.token);
       this.objects = this.getObjects;
     },
   },
@@ -41,7 +41,6 @@ export default {
   },
   mounted() {
     this.fetchData();
-    console.log(123)
     console.log(this.objects)
   }
 }
@@ -58,13 +57,14 @@ export default {
   width: 60%;
   margin-left: 100px;
 }
+
 .map-container p {
   margin-top: 20px;
   margin-bottom: 20px;
   font-size: 30px;
 }
 
-.objects-container p{
+.objects-container p {
   margin-top: 20px;
   margin-bottom: 20px;
   font-size: 30px;
@@ -74,15 +74,18 @@ export default {
   display: inline-block;
   margin-right: 10px;
 }
+
 .object-list-enter-active,
 .object-list-leave-active {
   transition: all 0.5s ease;
 }
+
 .object-list-enter-from,
 .object-list-leave-to {
   opacity: 0;
   transform: translateX(130px);
 }
+
 .object-list-move {
   transition: all 0.5s ease;
 }

@@ -4,6 +4,7 @@ import About from "@/views/About.vue";
 import Objects from "@/views/Objects.vue";
 import ReportInfo from "@/views/ReportInfo.vue";
 import Login from "@/views/Login.vue";
+import store from "@/store";
 
 const routes = [
   {
@@ -16,7 +17,8 @@ const routes = [
   },
   {
     path: '/reports',
-    component: Main
+    component: Main,
+    meta: { requiresAuth: true },
   },
   {
     path: '/about',
@@ -24,13 +26,15 @@ const routes = [
   },
   {
     path: '/objects',
-    component: Objects
+    component: Objects,
+    meta: { requiresAuth: true },
   },
   {
     path: "/reports/:id",
     name: "ReportInfo",
     component: ReportInfo,
-    props: true
+    props: true,
+    meta: { requiresAuth: true },
   },
 ]
 
@@ -38,5 +42,14 @@ const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
 })
+
+router.beforeEach((to, from, next) => {
+  if (to.meta.requiresAuth && !store.getters.getIsAuthorized) {
+    next('/login');
+    alert('Для перехода на страницу, необходимо авторизироваться')
+  } else {
+    next();
+  }
+});
 
 export default router

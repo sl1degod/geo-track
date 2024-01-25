@@ -25,7 +25,7 @@ export default {
   methods: {
     async fetchData() {
       const res = await axios.get("http://127.0.0.1:5000/reports", {headers: {
-          'Authorization': `Bearer ${localStorage.access_token}`}})
+          'Authorization': `Bearer ${this.$store.state.token}`}})
       this.reports = res.data
       console.log(res.data)
     }

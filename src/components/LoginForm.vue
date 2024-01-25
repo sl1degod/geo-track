@@ -28,14 +28,16 @@ export default {
       axios.post('http://127.0.0.1:5000/login', {login: this.loginUser, password: this.passwordUser})
           .then(res => {
             localStorage.access_token = res.data.token;
-            console.log(localStorage.access_token);
+            this.$store.commit('setToken', res.data.token);
+            this.$store.dispatch('changeAuthStatus', true);
             this.$router.push('/reports');
           })
           .catch(() => {
-            this.error = ""
-          })
-    }
+            this.error = "";
+          });
+    },
   }
+
 }
 </script>
 
