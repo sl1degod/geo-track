@@ -44,12 +44,17 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  if (to.meta.requiresAuth && !store.getters.getIsAuthorized) {
-    next('/login');
-    alert('Для перехода на страницу, необходимо авторизироваться')
+  if (to.meta.requiresAuth) {
+    if (!localStorage.access_token || !store.getters.getIsAuthorized) {
+      next('/login');
+      alert('Для перехода на страницу, необходимо авторизироваться');
+    } else {
+      next();
+    }
   } else {
     next();
   }
 });
+
 
 export default router

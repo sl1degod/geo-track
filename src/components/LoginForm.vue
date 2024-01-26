@@ -4,8 +4,9 @@
       <p>Авторизация</p>
       <div class="input">
         <input type="text" placeholder="Логин" v-model="loginUser">
-        <input type="text" placeholder="Пароль" v-model="passwordUser">
+        <input type="password" placeholder="Пароль" v-model="passwordUser" >
       </div>
+      <label style="color: red; font-size: 16px; margin-top: 20px;"> {{ error }} </label>
       <button class="sign_btn" @click.prevent="login">Войти</button>
     </div>
   </div>
@@ -27,15 +28,24 @@ export default {
     login() {
       axios.post('http://127.0.0.1:5000/login', {login: this.loginUser, password: this.passwordUser})
           .then(res => {
-            localStorage.access_token = res.data.token;
-            this.$store.commit('setToken', res.data.token);
-            this.$store.dispatch('changeAuthStatus', true);
-            this.$router.push('/reports');
+            if (res.data.token) {
+              this.$store.commit('setToken', res.data.token);
+              this.$store.dispatch('changeAuthStatus', true);
+              this.$router.push('/reports');
+            } else {
+              this.error = "Введенные данные неверны";
+            }
           })
-          .catch(() => {
-            this.error = "";
+          .catch(error => {
+            if (error.response.status === 403) {
+              this.error = "Введенные данные неверны";
+            }
           });
-    },
+
+    }
+  },
+  mounted() {
+    this.$store.state.token = null
   }
 
 }
@@ -86,7 +96,7 @@ input {
 }
 
 .sign_btn {
-  margin-top: 80px;
+  margin-top: 60px;
   height: 40px;
   width: 100px;
   border-radius: 12px;

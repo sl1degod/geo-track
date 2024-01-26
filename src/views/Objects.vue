@@ -41,7 +41,7 @@ export default {
   },
   mounted() {
     this.fetchData();
-    console.log(this.objects)
+    console.log(this.objects);
   }
 }
 </script>

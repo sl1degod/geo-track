@@ -6,7 +6,8 @@
     <div class="navigation">
       <a @click="$router.push('/objects')">Объекты</a>
       <a @click="$router.push('/about')">О продукте</a>
-      <button class="sign_btn" @click.prevent="logout" v-show="getAuthStatus">Выйти</button>
+      <button class="profile_btn" @click.prevent="" v-show="getAuthStatus">Профиль</button>
+      <button class="sign_btn" @click="logout" v-show="getAuthStatus">Выйти</button>
     </div>
   </div>
 
@@ -47,7 +48,6 @@ export default {
   display: flex;
   align-items: center;
   padding: 0 15px;
-  /*border-bottom: solid 1px white;*/
 }
 
 .logo {
@@ -84,8 +84,16 @@ export default {
   border-bottom: solid #ffffff 1px;
 }
 
-.sign_btn {
+.profile_btn {
   margin-left: 100px;
+  color: white;
+  border: solid 2px white;
+  padding: 5px;
+  background: transparent;
+  cursor: pointer;
+}
+.sign_btn {
+  margin-left: 20px;
   color: white;
   border: solid 2px white;
   padding: 5px;
