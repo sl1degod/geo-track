@@ -36,8 +36,9 @@ export default createStore({
   actions: {
     async fetchObjects({ commit }, token) {
       const res = await axios.get("http://127.0.0.1:5000/objects", {headers: {
-          'Authorization': `Bearer ${token}`}});
+          'Authorization': `Bearer ${localStorage.getItem('access_token')}`}})
       commit('setObjects', res.data);
+      console.log("11" + token)
     },
     async createObject({ commit, dispatch }, {newObject, token}) {
       const res = await axios.post("http://127.0.0.1:5000/objects", newObject ,{

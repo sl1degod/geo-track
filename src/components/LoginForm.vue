@@ -30,8 +30,10 @@ export default {
           .then(res => {
             if (res.data.token) {
               this.$store.commit('setToken', res.data.token);
+              localStorage.setItem('access_token', res.data.token);
               this.$store.dispatch('changeAuthStatus', true);
               this.$router.push('/reports');
+              // this.$router.push('/objects');
             } else {
               this.error = "Введенные данные неверны";
             }

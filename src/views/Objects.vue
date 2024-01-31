@@ -30,7 +30,8 @@ export default {
   },
   methods: {
     async fetchData() {
-      this.$store.dispatch('fetchObjects', this.$store.state.token);
+      console.log(localStorage.token);
+      this.$store.dispatch('fetchObjects', localStorage.token);
       this.objects = this.getObjects;
     },
   },
