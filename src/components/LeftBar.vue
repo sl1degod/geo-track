@@ -1,18 +1,36 @@
 <template>
   <div class="left-container">
     <div class="user-img">
-      <img src="http://127.0.0.1:5000/static/users/1.jpg"  alt="Изображение">
+      <img :src="`http://127.0.0.1:5000/static/users/`+ user.uuid_image + '.jpg'"  alt="Изображение">
     </div>
     <div class="info-user">
-      <p>ФамилияИмя</p>
-      <p>Должность:Сотрудник</p>
+      <p>{{ user.lastname + " " + user.firstname }}</p>
+      <p style="margin-top: 10px;">Должность: {{ user.post }}</p>
     </div>
   </div>
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
-  name: "left-bar"
+  name: "left-bar",
+  data() {
+    return {
+      user: []
+    }
+  },
+  methods: {
+    async fetchData() {
+      const res = await axios.get(`http://127.0.0.1:5000/users/${localStorage.getItem('user_id')}`, {headers: {
+          'Authorization': `Bearer ${this.$store.state.token}`}})
+      this.user = res.data
+      console.log(res.data)
+    }
+  },
+  mounted() {
+    this.fetchData()
+  }
 }
 </script>
 
@@ -20,7 +38,6 @@ export default {
 .left-container {
   display: flex;
   margin-left: 50px;
-  margin-top: 50px;
   flex-direction: column;
 }
 
@@ -28,15 +45,14 @@ export default {
   width: 220px;
   height: 300px;
   border-radius: 16px;
-  border: 2px solid white;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .user-img img{
-  max-width: 200px;
-  max-height: 250px;
+  max-width: 250px;
+  max-height: 300px;
   border-radius: 16px;
 }
 
@@ -44,7 +60,7 @@ export default {
   width: 220px;
   display: flex;
   justify-content: center;
-  margin-top: 50px;
+  margin-top: 20px;
   color: #FFFFFF;
   flex-wrap: wrap;
 }

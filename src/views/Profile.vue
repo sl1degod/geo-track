@@ -1,4 +1,5 @@
 <template>
+  <p style="font-size: 36px;color:#FFFFFF; text-align: center; margin-top: 20px;">Список сотрудников</p>
   <div class="main">
     <left-bar/>
     <users-card-list/>
@@ -19,13 +20,9 @@ export default {
 .main {
   height: 100vh;
   display: flex;
-  flex-direction: row;
 }
 
 users-card-list {
-  align-items: center;
-  justify-content: center;
-
 }
 
 

@@ -31,6 +31,7 @@ export default {
             if (res.data.token) {
               this.$store.commit('setToken', res.data.token);
               localStorage.setItem('access_token', res.data.token);
+              localStorage.setItem('user_id', res.data.userId);
               this.$store.dispatch('changeAuthStatus', true);
               this.$router.push('/reports');
               // this.$router.push('/objects');
@@ -38,10 +39,8 @@ export default {
               this.error = "Введенные данные неверны";
             }
           })
-          .catch(error => {
-            if (error.response.status === 403) {
+          .catch(() => {
               this.error = "Введенные данные неверны";
-            }
           });
 
     }
