@@ -9,7 +9,7 @@
       <p style="margin-top: 10px;">{{ user.lastname + " " + user.firstname }}</p>
       <p>Должность: {{ user.post }}</p>
     </div>
-    <div class="new-card">
+    <div class="new-card" @click="newUser">
       <img src="../../public/plus.png" alt="img">
       <p>Добавить сотрудника</p>
     </div>
@@ -32,6 +32,9 @@ export default {
           'Authorization': `Bearer ${this.$store.state.token}`}})
       this.users = res.data
     },
+    async newUser() {
+      console.log(123)
+    }
   },
   mounted() {
     this.fetchData()

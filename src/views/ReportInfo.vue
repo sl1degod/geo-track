@@ -33,7 +33,8 @@ export default {
   },
   methods: {
     async fetchData() {
-      const res = await axios.get(`http://127.0.0.1:5000/reports/` + this.$route.params.id)
+      const res = await axios.get("http://127.0.0.1:5000/reports/" + this.$route.params.id, {headers: {
+          'Authorization': `Bearer ${this.$store.state.token}`}})
       this.reports = res.data[0]
       console.log(res.data)
     }
