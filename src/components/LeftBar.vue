@@ -1,10 +1,10 @@
 <template>
   <div class="left-container">
     <div class="user-img">
-      <img :src="`http://127.0.0.1:5000/static/users/`+ user.uuid_image + '.jpg'"  alt="Изображение">
+      <img :src="`http://127.0.0.1:5000/static/users/`+ user.uuid_image"  alt="Изображение">
     </div>
     <div class="info-user">
-      <p>{{ user.lastname + " " + user.firstname }}</p>
+      <p>{{ user.secondname + " " + user.firstname }}</p>
       <p style="margin-top: 10px;">Должность: {{ user.post }}</p>
     </div>
   </div>

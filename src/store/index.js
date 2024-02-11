@@ -6,7 +6,8 @@ export default createStore({
   state: {
     objects: [],
     isAuthorized: false,
-    token: ''
+    token: '',
+    users: []
   },
   getters: {
     getObjects(state) {
@@ -17,6 +18,9 @@ export default createStore({
     },
     getToken(state) {
       return state.token
+    },
+    getUsers(state) {
+      return state.users
     }
   },
   mutations: {
@@ -31,6 +35,12 @@ export default createStore({
     },
     setToken(state, token) {
       state.token = token
+    },
+    addUser(state, newUser) {
+      state.users.push(newUser)
+    },
+    setUser(state, users) {
+      state.users = users
     }
   },
   actions: {
@@ -40,6 +50,14 @@ export default createStore({
       commit('setObjects', res.data);
       console.log("11" + token)
     },
+
+    async getUsers({ commit }, token) {
+      const res = await axios.get("http://127.0.0.1:5000/users", {headers: {
+          'Authorization': `Bearer ${localStorage.getItem('access_token')}`}})
+      commit('setUser', res.data);
+      console.log("11" + token)
+    },
+
     async createObject({ commit, dispatch }, {newObject, token}) {
       const res = await axios.post("http://127.0.0.1:5000/objects", newObject ,{
         headers: {
@@ -47,9 +65,19 @@ export default createStore({
       commit('addObject', res.data);
       dispatch('fetchObjects', token)
     },
+
+    async createUser({ commit, dispatch }, {newUser, token}) {
+      const res = await axios.post("http://127.0.0.1:5000/users", newUser ,{
+        headers: {
+          'Authorization': `Bearer ${token}`}});
+      commit('addUser', res.data);
+      dispatch('getUsers', token)
+    },
     async changeAuthStatus({ commit }, status) {
       commit('setAuthStatus', status)
-    }
+    },
+
+
   },
   plugins: [
     createPersistedState()

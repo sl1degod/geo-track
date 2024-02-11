@@ -27,7 +27,6 @@
 <script>
 import axios from "axios";
 
-
 export default {
   name: "object-form",
   data() {
@@ -70,8 +69,6 @@ export default {
     },
     hideDialog() {
       this.$emit('update:show', false)
-      this.adminId = ''
-      this.objectName = ''
     },
     async fetchData() {
       const res = await axios.get("http://127.0.0.1:5000/users", {headers: {
