@@ -18,8 +18,9 @@ export default {
   color: #fff;
   text-align: center;
   padding: 20px;
-  position: absolute;
   width: 100%;
+  left: 0;
+  bottom: 0;
 }
 
 

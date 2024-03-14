@@ -1,6 +1,6 @@
 <template>
   <div class="main">
-    <p style="color: white; text-align: center; font-size: 30px;">Отчет об акте #{{ $route.params.id }}</p>
+    <p style="color: white; text-align: center; font-size: 30px; margin-top: 50px;">Отчет об акте #{{ $route.params.id }}</p>
     <div class="container">
     <div class="image">
       <img :src="'http://127.0.0.1:5000/static/reports/' + reports.violations_image">
@@ -47,7 +47,8 @@ export default {
 
 <style scoped>
 .main {
-  height: 80vh;
+  height: 100%;
+  min-height: 900px;
 }
 
 .container {

@@ -24,7 +24,8 @@ export default {
 .main {
   display: flex;
   justify-content: center;
-  height: 80vh;
+  height: 100%;
+  min-height: 900px;
   width: 100%;
 }
 
