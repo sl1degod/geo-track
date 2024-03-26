@@ -50,6 +50,7 @@ export default {
 <style scoped>
 .main {
   height: 100%;
+  min-height: 900px;
   color: white;
   display: flex;
 }

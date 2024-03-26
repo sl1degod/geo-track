@@ -62,7 +62,7 @@ export default {
   margin-top: 5%;
   display: flex;
   flex-direction: column;
-  background: #111111;
+  background: #1a1a1a;
   border-radius: 12px;
   height: 450px;
   width: 400px;
