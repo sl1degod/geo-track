@@ -1,5 +1,6 @@
 <template>
   <div class="main">
+    <search-field @searchReports="searchReports"/>
     <p style="color: white; font-size: 30px; margin-bottom: 20px; text-align: center">Список актов</p>
     <div class="reports">
       <card-list :reports="reports"/>
@@ -11,16 +12,19 @@
 
 import axios from "axios";
 import CardList from "@/components/CardList.vue";
+import SearchField from "@/components/SearchField";
 
 export default {
   name: 'MainView',
   data() {
     return {
       reports: [],
+      searchField: ""
     }
   },
   components: {
-    CardList
+    CardList,
+    SearchField
   },
   methods: {
     async fetchData() {
@@ -28,6 +32,9 @@ export default {
           'Authorization': `Bearer ${this.$store.state.token}`}})
       this.reports = res.data
       console.log(res.data)
+    },
+    searchReports (value) {
+      console.log(value)
     }
   },
   mounted() {
