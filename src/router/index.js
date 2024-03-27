@@ -6,6 +6,7 @@ import ReportInfo from "@/views/ReportInfo.vue";
 import Login from "@/views/Login.vue";
 import store from "@/store";
 import Profile from "@/views/Profile.vue";
+import Stats from "@/views/Stats.vue";
 
 const routes = [
   {
@@ -28,6 +29,11 @@ const routes = [
   {
     path: '/objects',
     component: Objects,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: '/stats',
+    component: Stats,
     meta: { requiresAuth: true },
   },
   {
