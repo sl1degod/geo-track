@@ -47,4 +47,5 @@ export default {
 .main {
   height: 100%;
 }
+
 </style>

@@ -1,5 +1,10 @@
 <template>
   <div class="card-container">
+    <div class="buttons">
+      <button>По возрастанию</button>
+      <button>По убыванию</button>
+      <button>Фильтр</button>
+    </div>
     <div class="card"
          style="cursor:pointer;"
          v-for="report in reports"
@@ -77,6 +82,18 @@ export default {
 
 .card p {
   color: white;
+}
+
+button {
+  margin-top: 20px;
+  right: 0;
+  height: 40px;
+  width: 100px;
+  border-radius: 12px;
+  border: 2px solid white;
+  background: transparent;
+  color: white;
+  cursor: pointer;
 }
 
 </style>

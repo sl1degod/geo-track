@@ -161,7 +161,9 @@ button {
   background: #1a1a1a;
   border-radius: 12px;
   height: 800px;
+  max-height: 100%;
   width: 500px;
   padding: 20px;
+  overflow: auto;
 }
 </style>

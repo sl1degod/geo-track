@@ -6,8 +6,9 @@
     <div class="navigation">
       <a @click="$router.push('/objects')">Объекты</a>
       <a @click="$router.push('/stats')">Статистика</a>
+      <a @click="$router.push('/profile')">Сотрудники</a>
       <a @click="$router.push('/about')">О продукте</a>
-      <button class="profile_btn" @click.prevent="$router.push('/profile')" v-show="getAuthStatus">Профиль</button>
+<!--      <button class="profile_btn" @click.prevent="$router.push('/profile')" v-show="getAuthStatus">Профиль</button>-->
       <button class="sign_btn" @click="logout" v-show="getAuthStatus">Выйти</button>
     </div>
   </div>
