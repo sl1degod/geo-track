@@ -4,6 +4,7 @@
       Geo Track
     </div>
     <div class="navigation">
+      <a @click="$router.push('/reports')">Нарушения</a>
       <a @click="$router.push('/objects')">Объекты</a>
       <a @click="$router.push('/stats')">Статистика</a>
       <a @click="$router.push('/profile')">Сотрудники</a>
@@ -101,6 +102,7 @@ export default {
   padding: 5px;
   background: transparent;
   cursor: pointer;
+  margin-bottom: 20px;
 }
 
 </style>

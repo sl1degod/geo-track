@@ -1,9 +1,9 @@
 <template>
   <div class="main">
-    <search-field @searchReports="searchReports"/>
+    <search-field @searchReports="searchReports" @click="sortByDate"/>
     <p style="color: white; font-size: 30px; margin-bottom: 20px; text-align: center">Список актов</p>
     <div class="reports">
-      <card-list :reports="reports"/>
+      <card-list :filter="filter" :searchField="searchField"/>
     </div>
   </div>
 </template>
@@ -19,7 +19,8 @@ export default {
   data() {
     return {
       reports: [],
-      searchField: ""
+      searchField: "",
+      search: ""
     }
   },
   components: {
@@ -33,10 +34,38 @@ export default {
       this.reports = res.data
       console.log(res.data)
     },
-    searchReports (value) {
-      console.log(value)
-    }
+    searchReports(value) {
+      this.search = value;
+    },
+    sortByDate() {
+      if (this.sortedByDate) {
+        this.reports.sort((a, b) => new Date(a.date) - new Date(b.date));
+        this.sortedByDate = false;
+      } else {
+        this.reports.sort((a, b) => new Date(b.date) - new Date(a.date));
+        this.sortedByDate = true;
+      }
+    },
   },
+  computed: {
+    filter() {
+      if (!this.search) {
+        return this.reports;
+      } else {
+        return this.reports.filter(report =>
+            Object.values(report).some(value => {
+              if (typeof value === 'string') {
+                return value.toLowerCase().includes(this.search.toLowerCase());
+              }
+              return false;
+            })
+        );
+      }
+    },
+  },
+
+
+
   mounted() {
     this.fetchData();
   }

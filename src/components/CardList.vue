@@ -1,13 +1,8 @@
 <template>
   <div class="card-container">
-    <div class="buttons">
-      <button>По возрастанию</button>
-      <button>По убыванию</button>
-      <button>Фильтр</button>
-    </div>
     <div class="card"
          style="cursor:pointer;"
-         v-for="report in reports"
+         v-for="report in filter"
          :key="report.id"
          @click="$router.push(`/reports/${report.id}`)">
       <h3 style="margin-right: 20px; margin-left: 10px; width: 20px">{{ report.id }}</h3>
@@ -15,7 +10,7 @@
         <img :src="'http://127.0.0.1:5000/static/reports/' + report.violations_image"  alt="Изображение">
       </div>
       <div class="card-info">
-        <p>{{ report.fio }}</p>
+        <p>{{ report.object }}</p>
         <h3>{{ report.violations }}</h3>
         <p>{{ report.date }}</p>
       </div>
@@ -28,7 +23,7 @@
 export default {
   name: "CardList",
   props: {
-    reports: {
+    filter: {
       type: Array,
       required: true
     }
