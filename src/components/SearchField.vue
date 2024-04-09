@@ -1,6 +1,6 @@
 <template>
   <div class="input-field">
-    <input class="searchField" type="text" placeholder="Поиск нарушений" @change="searchReports" v-model="text"/>
+    <input class="searchField" type="text" placeholder="Поиск нарушений" @change="searchEmpl" v-model="text"/>
     <img src="../../public/icons8-сортировать-100.png" alt="img" style="height: 30px; width: 30px; margin-top: 10px; cursor:pointer; color: #FFFFFF" @click="sortByDate">
   </div>
 </template>
@@ -14,8 +14,8 @@ export default {
     }
   },
   methods: {
-    searchReports() {
-      this.$emit('searchReports', this.text)
+    searchEmpl() {
+      this.$emit('searchEmpl', this.text)
     }
   }
 }
@@ -28,7 +28,7 @@ export default {
   margin-bottom: 20px;
 }
 .searchField {
-  width: 800px;
+  width: 770px;
   height: 50px;
   background-color: transparent;
   padding: 10px;

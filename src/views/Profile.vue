@@ -12,7 +12,8 @@ import LeftBar from "@/components/LeftBar.vue";
 
 export default {
   name: "profile-view",
-  components: {LeftBar, UsersCardList}
+  components: {LeftBar, UsersCardList},
+
 }
 </script>
 
@@ -20,14 +21,8 @@ export default {
 .main {
   height: 100%;
   display: flex;
-  min-height: 900px;
 }
-
 users-card-list {
 }
-
-
-
-
 
 </style>

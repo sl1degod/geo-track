@@ -12,6 +12,9 @@
         <p>Описание: {{reports.description}} null</p>
         <p>Объект: {{reports.object}}</p>
         <p>Дата составления: {{reports.date}}, {{ reports.time }}</p>
+        <div class="btn">
+          <button>Сформировать акт</button>
+        </div>
       </div>
       </div>
     </div>
@@ -65,6 +68,7 @@ export default {
   width: auto;
   margin-left: 100px;
   align-items: center;
+  margin-top: 50px;
 }
 
 .image {
@@ -79,5 +83,9 @@ p {
   color: white;
   font-size: 20px;
   margin-bottom: 10px;
+}
+
+button {
+  width: 200px;
 }
 </style>

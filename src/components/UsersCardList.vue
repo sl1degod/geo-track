@@ -1,7 +1,8 @@
 <template>
   <div class="main-card">
+  <search-field @searchEmpl="searchEmpl" @click="sortByDate"/>
     <div class="card"
-         v-for="user in users"
+         v-for="user in filter"
          :key="user.id">
       <div class="img-container">
         <img :src="'http://127.0.0.1:5000/static/users/' + user.uuid_image" alt="img">
@@ -15,19 +16,22 @@
     </div>
   </div>
   <users-form v-model:show="isVisible" />
+
 </template>
 
 <script>
 import {mapGetters} from "vuex";
 import UsersForm from "@/components/UsersForm.vue";
+import SearchField from "@/components/SearchField";
 
 export default {
   name: "users-card-list",
-  components: {UsersForm},
+  components: {UsersForm, SearchField},
   data() {
     return {
       users: [],
-      isVisible: false
+      isVisible: false,
+      search: ""
     }
   },
   methods: {
@@ -38,12 +42,34 @@ export default {
     },
     openDialog() {
       this.isVisible = true
-    }
+    },
+    searchEmpl(value) {
+      this.search = value;
+    },
+    sortByDate() {
+      if (this.sortedByDate) {
+        this.users.sort((a, b) => new Date(a.date) - new Date(b.date));
+        this.sortedByDate = false;
+      } else {
+        this.users.sort((a, b) => new Date(b.date) - new Date(a.date));
+        this.sortedByDate = true;
+      }
+    },
   },
   computed: {
     ...mapGetters({
       getUsers: 'getUsers'
-    })
+    }),
+    filter() {
+      if (!this.search) {
+        return this.users;
+      } else {
+        return this.users.filter((user) =>
+            (user.secondname + " " + user.firstname + " " + user.lastname).toLowerCase().includes(this.search.toLowerCase())
+        );
+      }
+    },
+
   },
   mounted() {
     this.fetchData();
