@@ -13,7 +13,7 @@
         <p>Объект: {{reports.object}}</p>
         <p>Дата составления: {{reports.date}}, {{ reports.time }}</p>
         <div class="btn">
-          <button>Сформировать акт</button>
+          <button @click="download">Сформировать акт</button>
         </div>
       </div>
       </div>
@@ -40,8 +40,26 @@ export default {
           'Authorization': `Bearer ${this.$store.state.token}`}})
       this.reports = res.data[0]
       console.log(res.data)
-    }
-  },
+    },
+    async download () {
+      axios
+          .get("http://127.0.0.1:5000/reportsAct/" + this.$route.params.id, {
+            headers: {
+              'Authorization': `Bearer ${this.$store.state.token}`,
+              'Accept': 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'}}, {
+            responseType: 'blob' })
+          .then(function (response) {
+              const blob = new Blob([response.data], { type: response.data.type });
+              const link = document.createElement('a');
+              link.href = URL.createObjectURL(blob);
+              link.download = name;
+              link.click();
+              URL.revokeObjectURL(link.href);
+          })
+          .catch(function (error) {
+            console.log(JSON.stringify(error))
+          })
+    }},
   mounted() {
     this.fetchData();
   }
