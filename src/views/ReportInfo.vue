@@ -56,7 +56,7 @@ export default {
             const url = window.URL.createObjectURL(response.data);
             const link = document.createElement('a');
             link.href = url;
-            link.setAttribute('download', 'act.txt'); // Указываем имя файла для скачивания
+            link.setAttribute('download', 'act.docx'); // Указываем имя файла для скачивания
             link.click();
             window.URL.revokeObjectURL(url);
           })
