@@ -36,33 +36,40 @@ export default {
   },
   methods: {
     async fetchData() {
-      const res = await axios.get("http://127.0.0.1:5000/reports/" + this.$route.params.id, {headers: {
-          'Authorization': `Bearer ${this.$store.state.token}`}})
+      const res = await axios.get("http://127.0.0.1:5000/reports/" + this.$route.params.id, {
+        headers: {
+          'Authorization': `Bearer ${this.$store.state.token}`
+        }
+      })
       this.reports = res.data[0]
       console.log(res.data)
     },
-    async download () {
+    async download() {
       axios
           .get("http://127.0.0.1:5000/reportsAct/" + this.$route.params.id, {
             headers: {
-              'Authorization': `Bearer ${this.$store.state.token}`,
-              'Accept': 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'}}, {
-            responseType: 'blob' })
-          .then(function (response) {
-              const blob = new Blob([response.data], { type: response.data.type });
-              const link = document.createElement('a');
-              link.href = URL.createObjectURL(blob);
-              link.download = name;
-              link.click();
-              URL.revokeObjectURL(link.href);
+              'Authorization': 'Bearer ' + this.$store.state.token
+            },
+            responseType: 'blob'
           })
-          .catch(function (error) {
-            console.log(JSON.stringify(error))
+          .then(response => {
+            const url = window.URL.createObjectURL(response.data);
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', 'act.txt'); // Указываем имя файла для скачивания
+            link.click();
+            window.URL.revokeObjectURL(url);
           })
-    }},
-  mounted() {
+          .catch(error => {
+            console.error('Ошибка при скачивании файла:', error);
+          });
+    }
+
+  },
+    mounted() {
     this.fetchData();
   }
+
 }
 </script>
 
