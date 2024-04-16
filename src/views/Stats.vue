@@ -1,6 +1,8 @@
 <template>
 <div class="stats">
-  <chart/>
+  <div class="chart">
+    <chart/>
+  </div>
 </div>
 </template>
 
@@ -17,11 +19,11 @@ export default {
 .stats {
   display: flex;
   justify-content: center;
-  align-items: center;
-  height: 80vh; /* Установите высоту контейнера, чтобы диаграмма была видимой */
+  height: 70vh; /* Установите высоту контейнера, чтобы диаграмма была видимой */
 }
 
-chart {
-  width: 80%; /* Установите ширину диаграммы */
+.chart {
+  width: 80%; /* Установите ширину диаграммы на 100% */
+  height: 400px; /* Установите желаемую высоту диаграммы (например, 400px) */
 }
 </style>
