@@ -73,6 +73,7 @@ export default createStore({
       commit('addUser', res.data);
       dispatch('getUsers', token)
     },
+
     async changeAuthStatus({ commit }, status) {
       commit('setAuthStatus', status)
     },

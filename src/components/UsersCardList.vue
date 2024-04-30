@@ -1,9 +1,12 @@
 <template>
   <div class="main-card">
   <search-field @searchEmpl="searchEmpl" @click="sortByDate"/>
+    <div class="main">
     <div class="card"
          v-for="user in filter"
-         :key="user.id">
+         :key="user.id"
+         :itemid="user.id"
+         @click="openDialogForChangeData">
       <div class="img-container">
         <img :src="'http://127.0.0.1:5000/static/users/' + user.uuid_image" alt="img">
       </div>
@@ -14,23 +17,29 @@
       <img src="../../public/plus.png" alt="img">
       <p>Добавить сотрудника</p>
     </div>
+    </div>
   </div>
   <users-form v-model:show="isVisible" />
-
+  <users-form-change v-model:show="isVisibleForChange" :clickedUser="clickedUser" :user-id="userId"/>
 </template>
 
 <script>
 import {mapGetters} from "vuex";
 import UsersForm from "@/components/UsersForm.vue";
 import SearchField from "@/components/SearchField";
+import UsersFormChange from "@/components/UsersFormChange.vue";
+import axios from "axios";
 
 export default {
   name: "users-card-list",
-  components: {UsersForm, SearchField},
+  components: {UsersFormChange, UsersForm, SearchField},
   data() {
     return {
       users: [],
+      clickedUser: [],
+      userId: "",
       isVisible: false,
+      isVisibleForChange: false,
       search: ""
     }
   },
@@ -42,6 +51,14 @@ export default {
     },
     openDialog() {
       this.isVisible = true
+    },
+    async openDialogForChangeData(event) {
+      this.isVisibleForChange = true
+      this.userId = event.currentTarget.getAttribute('itemid');
+      console.log('Выбранный айди карточки:', this.userId);
+      const resUsers = await axios.get(`http://127.0.0.1:5000/users/${this.userId}`, {headers: {
+          'Authorization': `Bearer ${this.$store.state.token}`}})
+      this.clickedUser = resUsers.data
     },
     searchEmpl(value) {
       this.search = value;
@@ -79,11 +96,17 @@ export default {
 </script>
 
 <style scoped>
+.main {
+  display: flex;
+  flex-wrap: wrap;
+}
 .main-card {
   display: flex;
   margin-top: 50px;
   margin-left: 50px;
   flex-wrap: wrap;
+  margin-bottom: 50px;
+  justify-content: center;
 }
 
 .card {
@@ -93,6 +116,7 @@ export default {
   height: 350px;
   border-radius: 16px;
   border: 2px solid white;
+  cursor: pointer;
 }
 
 .img-container {

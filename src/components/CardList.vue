@@ -14,7 +14,6 @@
         <h3>{{ report.violations }}</h3>
         <p>{{ report.date }}</p>
       </div>
-
     </div>
   </div>
 </template>

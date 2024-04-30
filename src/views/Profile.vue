@@ -19,7 +19,7 @@ export default {
 
 <style scoped>
 .main {
-  height: 100%;
+  min-height: 100%;
   display: flex;
 }
 users-card-list {

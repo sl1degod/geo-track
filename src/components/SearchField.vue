@@ -26,7 +26,9 @@ export default {
   display: flex;
   justify-content: center;
   margin-bottom: 20px;
+  margin-top: 20px;
 }
+
 .searchField {
   width: 770px;
   height: 50px;
@@ -36,4 +38,7 @@ export default {
   border: 2px solid white;
   color: #FFFFFF;
 }
+
+
+
 </style>

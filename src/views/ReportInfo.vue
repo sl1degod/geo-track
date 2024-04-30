@@ -9,11 +9,13 @@
       <div class="report-info">
         <p>Составитель: {{reports.fio}}</p>
         <p>Тип нарушения: {{reports.violations}}</p>
-        <p>Описание: {{reports.description}} null</p>
+        <p>Описание: {{reports.description}}</p>
+        <p>Координаты нарушения: {{reports.rep_latitude}}, {{reports.rep_longitude}}</p>
         <p>Объект: {{reports.object}}</p>
         <p>Дата составления: {{reports.date}}, {{ reports.time }}</p>
         <div class="btn">
           <button @click="download">Сформировать акт</button>
+          <button @click="deleteVio" style="margin-left: 20px;">Удалить нарушение</button>
         </div>
       </div>
       </div>
@@ -63,7 +65,16 @@ export default {
           .catch(error => {
             console.error('Ошибка при скачивании файла:', error);
           });
-    }
+    },
+    async deleteVio() {
+      await axios.delete("http://127.0.0.1:5000/reports/" + this.$route.params.id, {
+        headers: {
+          'Authorization': `Bearer ${this.$store.state.token}`
+        }
+      })
+      alert("Удаление прошло успешно")
+      this.$router.push('/reports');
+    },
 
   },
     mounted() {
