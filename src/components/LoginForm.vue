@@ -32,8 +32,13 @@ export default {
               this.$store.commit('setToken', res.data.token);
               localStorage.setItem('access_token', res.data.token);
               localStorage.setItem('user_id', res.data.userId);
-              this.$store.dispatch('changeAuthStatus', true);
-              this.$router.push('/reports');
+              localStorage.setItem('user_role', res.data.user_role)
+              if (parseInt(localStorage.getItem('user_role')) === 2 || parseInt(localStorage.getItem('user_role')) === 3) {
+                this.$router.push('/reports');
+                this.$store.dispatch('changeAuthStatus', true);
+              } else {
+                alert("У вас нет прав доступа");
+              }
               // this.$router.push('/objects');
             } else {
               this.error = "Введенные данные неверны";

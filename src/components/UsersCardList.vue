@@ -50,15 +50,23 @@ export default {
       this.users = this.getUsers;
     },
     openDialog() {
-      this.isVisible = true
+      if (parseInt(localStorage.getItem('user_role')) === 2) {
+        this.isVisible = true
+      } else {
+        this.isVisible = false
+      }
     },
     async openDialogForChangeData(event) {
-      this.isVisibleForChange = true
-      this.userId = event.currentTarget.getAttribute('itemid');
-      console.log('Выбранный айди карточки:', this.userId);
-      const resUsers = await axios.get(`http://127.0.0.1:5000/users/${this.userId}`, {headers: {
-          'Authorization': `Bearer ${this.$store.state.token}`}})
-      this.clickedUser = resUsers.data
+      if (parseInt(localStorage.getItem('user_role')) === 2) {
+        this.isVisibleForChange = true
+        this.userId = event.currentTarget.getAttribute('itemid');
+        console.log('Выбранный айди карточки:', this.userId);
+        const resUsers = await axios.get(`http://127.0.0.1:5000/users/${this.userId}`, {headers: {
+            'Authorization': `Bearer ${this.$store.state.token}`}})
+        this.clickedUser = resUsers.data
+      } else {
+        console.log(123)
+      }
     },
     searchEmpl(value) {
       this.search = value;

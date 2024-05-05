@@ -44,12 +44,17 @@ export default {
       this.objects = res.data;
     },
     handleMapClick(event) {
-      this.isVisible = true;
-      this.afterClick = true;
-      this.latitude = event.get('coords')[0];
-      this.longitude = event.get('coords')[1];
-      console.log('Latitude:', this.latitude);
-      console.log('Longitude:', this.longitude);
+      if (parseInt(localStorage.getItem('user_role')) === 2) {
+        this.isVisible = true;
+        this.afterClick = true;
+        this.latitude = event.get('coords')[0];
+        this.longitude = event.get('coords')[1];
+        console.log('Latitude:', this.latitude);
+        console.log('Longitude:', this.longitude);
+      } else {
+        console.log(123)
+      }
+
     },
   },
   mounted() {
