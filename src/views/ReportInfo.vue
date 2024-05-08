@@ -15,6 +15,7 @@
         <p>Дата составления: {{reports.date}}, {{ reports.time }}</p>
         <div class="btn">
           <button @click="download">Сформировать акт</button>
+          <button @click="sendEmail" style="margin-left: 20px;">Отправить по почте</button>
           <button @click="deleteVio" style="margin-left: 20px;">Удалить нарушение</button>
         </div>
       </div>
@@ -75,6 +76,23 @@ export default {
       alert("Удаление прошло успешно")
       this.$router.push('/reports');
     },
+
+    async sendEmail() {
+      const email = prompt("Введите адрес электронной почты:");
+      if (email) {
+        try {
+          await axios.post(`http://127.0.0.1:5000/reports/${this.$route.params.id}/sendEmail`, {email},{
+            headers: {
+              'Authorization': `Bearer ${this.$store.state.token}`
+            }
+          });
+          alert("Документ успешно отправлен на указанный адрес: " + email);
+        } catch (error) {
+          console.error('Ошибка при отправке по почте:', error);
+        }
+      }
+    }
+
 
   },
     mounted() {
