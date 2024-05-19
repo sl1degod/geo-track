@@ -1,29 +1,35 @@
 <template>
+  <div class="main">
 <div class="stats">
   <div class="chart">
     <chart/>
+    <chart-objects-app/>
   </div>
+</div>
 </div>
 </template>
 
 <script>
 import Chart from "@/components/Chart.vue";
+import ChartObjectsApp from "@/components/ChartByObjects.vue";
 
 export default {
   name: "Stats-app",
-  components: {Chart}
+  components: {ChartObjectsApp, Chart}
 }
 </script>
 
 <style scoped>
+
+
 .stats {
   display: flex;
   justify-content: center;
-  height: 70vh; /* Установите высоту контейнера, чтобы диаграмма была видимой */
 }
 
 .chart {
-  width: 80%; /* Установите ширину диаграммы на 100% */
-  height: 400px; /* Установите желаемую высоту диаграммы (например, 400px) */
+  width: 80%;
+  height: 100%; /* Установите высоту контейнера диаграммы на 500px */
 }
+
 </style>

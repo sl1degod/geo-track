@@ -1,12 +1,12 @@
 <template>
   <div class="dialog" v-if="show" @click="hideDialog">
     <div @click.stop class="dialog-content">
-      <form @submit.prevent>
-        <p style="margin-top: 10px; margin-bottom: 20px">Изменение пользоваеля</p>
+      <form @submit.prevent="changeData">
+        <p style="margin-top: 10px; margin-bottom: 20px">Изменение пользователя</p>
         <p class="labels">Введите название</p>
         <input type="text" placeholder="Введите название" v-model="name">
-        <p class="labels">Введите долоту</p>
-        <input type="text" placeholder="Введите долоту" v-model="latitude">
+        <p class="labels">Введите долготу</p>
+        <input type="text" placeholder="Введите долготу" v-model="latitude">
         <p class="labels">Введите широту</p>
         <input type="text" placeholder="Введите широту" v-model="longitude">
         <p class="labels">Выберите ответственного</p>
@@ -15,7 +15,7 @@
             {{ admin.firstname + ' ' + admin.secondname + ' ' + admin.lastname }}
           </option>
         </select>
-        <button @click="changeData">Изменить</button>
+        <button type="submit">Изменить</button>
       </form>
     </div>
   </div>
@@ -46,36 +46,63 @@ export default {
       required: true
     }
   },
+  watch: {
+    show(newVal) {
+      if (newVal) {
+        this.loadObjectData();
+      }
+    }
+  },
   methods: {
+    async loadObjectData() {
+      try {
+        const res = await axios.get(`http://127.0.0.1:5000/objects/${this.objectId}`, {
+          headers: {
+            'Authorization': `Bearer ${this.$store.state.token}`
+          }
+        });
+        const object = res.data;
+        this.name = object.name;
+        this.latitude = object.latitude;
+        this.longitude = object.longitude;
+        this.selectedAdmin = object.admin;
+      } catch (error) {
+        console.error("Error loading object data:", error);
+      }
+    },
     async changeData() {
-      await axios.put(`http://127.0.0.1:5000/objects/${this.objectId}`,
-          {
-            name: this.name,
-            latitude: this.latitude,
-            longitude: this.longitude,
-            admin: this.selectedAdmin
-          }, {
-            headers: {
-              'Authorization': `Bearer ${this.$store.state.token}`
-            }})
-      this.$emit('update:show', false)
+      try {
+        await axios.put(`http://127.0.0.1:5000/objects/${this.objectId}`, {
+          name: this.name,
+          latitude: this.latitude,
+          longitude: this.longitude,
+          admin: this.selectedAdmin
+        }, {
+          headers: {
+            'Authorization': `Bearer ${this.$store.state.token}`
+          }});
+        this.$emit('update:show', false);
+      } catch (error) {
+        console.error("Error updating object:", error);
+      }
     },
     hideDialog() {
-      this.$emit('update:show', false)
+      this.$emit('update:show', false);
     },
-    async fetchData() {
-      const res = await axios.get("http://127.0.0.1:5000/users", {headers: {
-          'Authorization': `Bearer ${this.$store.state.token}`}})
-      this.admins = res.data
-      console.log(this.userId)
-    },
-    onFileChange(event) {
-      const file = event.target.files[0];
-      this.selectedFile = file;
-    },
+    async fetchAdmins() {
+      try {
+        const res = await axios.get("http://127.0.0.1:5000/users", {
+          headers: {
+            'Authorization': `Bearer ${this.$store.state.token}`
+          }});
+        this.admins = res.data;
+      } catch (error) {
+        console.error("Error fetching admins:", error);
+      }
+    }
   },
   mounted() {
-    this.fetchData()
+    this.fetchAdmins();
   }
 }
 </script>
@@ -146,7 +173,7 @@ button {
   margin: auto;
   background: #1a1a1a;
   border-radius: 12px;
-  height: 800px;
+  height: 600px;
   max-height: 100%;
   width: 500px;
   padding: 20px;

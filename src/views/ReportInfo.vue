@@ -1,6 +1,6 @@
 <template>
   <div class="main">
-    <p style="color: white; text-align: center; font-size: 30px; margin-top: 50px;">Отчет об акте #{{ $route.params.id }}</p>
+    <p style="color: white; text-align: center; font-size: 30px; margin-top: 50px;">Отчет о нарушении #{{ $route.params.id }}</p>
     <div class="container">
     <div class="image">
       <img :src="'http://127.0.0.1:5000/static/reports/' + reports.violations_image">
@@ -12,10 +12,13 @@
         <p>Описание: {{reports.description}}</p>
         <p>Координаты нарушения: {{reports.rep_latitude}}, {{reports.rep_longitude}}</p>
         <p>Объект: {{reports.object}}</p>
+        <p>Нужно устранить: {{reports.days}}</p>
+        <p>Статус: {{reports.status}}</p>
         <p>Дата составления: {{reports.date}}, {{ reports.time }}</p>
         <div class="btn">
           <button @click="download">Сформировать акт</button>
           <button @click="sendEmail" style="margin-left: 20px;">Отправить по почте</button>
+          <button @click="changeStatusVio" style="margin-left: 20px;">Устранено</button>
           <button @click="deleteVio" style="margin-left: 20px;">Удалить нарушение</button>
         </div>
       </div>
@@ -74,6 +77,16 @@ export default {
         }
       })
       alert("Удаление прошло успешно")
+      this.$router.push('/reports');
+    },
+
+    async changeStatusVio() {
+      await axios.patch("http://127.0.0.1:5000/reports/" + this.$route.params.id, {status: 'Устранено'}, {
+        headers: {
+          'Authorization': `Bearer ${this.$store.state.token}`
+        }
+      })
+      alert("Статус был изменен")
       this.$router.push('/reports');
     },
 

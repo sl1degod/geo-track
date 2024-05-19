@@ -1,6 +1,7 @@
 <template>
   <div class="card-container">
     <div class="card"
+         :class="getZoneClass(report.type)"
          style="cursor:pointer;"
          v-for="report in filter"
          :key="report.id"
@@ -27,7 +28,15 @@ export default {
       required: true
     }
   },
-
+  methods: {
+    getZoneClass(type) {
+      return {
+        'red-zone': type === 'Красная зона',
+        'yellow-zone': type === 'Желтая зона',
+        'green-zone': type === 'Зеленая зона'
+      };
+    }
+  }
 }
 </script>
 
@@ -43,7 +52,6 @@ export default {
 .card {
   display: flex;
   align-items: center;
-  /* border: 1px solid #FFF; */
   border: 1px solid #FFF;
   border-radius: 5px;
   margin: 10px;
@@ -90,4 +98,15 @@ button {
   cursor: pointer;
 }
 
+.red-zone {
+  border-color: #ff6464;
+}
+
+.yellow-zone {
+  border-color: #e0ff7d;
+}
+
+.green-zone {
+  border-color: #89ffb4;
+}
 </style>

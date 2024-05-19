@@ -1,10 +1,5 @@
 <template>
-  <div>
-    <div class="date-inputs">
-      <input type="date" v-model="startDate" style="margin-right: 10px;">
-      <input type="date" v-model="endDate" style="margin-right: 10px;">
-      <button @click="filterChartData">Применить</button>
-    </div>
+  <div class="main">
     <Bar
         id="my-chart-id"
         :options="chartOptions"
@@ -13,19 +8,18 @@
         v-if="loaded"
     />
   </div>
-
 </template>
 
 <script>
-import { Bar } from 'vue-chartjs'
-import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js'
+import {Bar} from 'vue-chartjs'
+import {Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale} from 'chart.js'
 import axios from "axios";
 
 ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
 
 export default {
-  name: "Chart-app",
-  components: { Bar },
+  name: "ChartByObjects",
+  components: {Bar},
   data() {
     return {
       loaded: false,
@@ -37,7 +31,7 @@ export default {
   computed: {
     filteredChartData() {
       if (!this.chartData || !this.startDate || !this.endDate) {
-        return [];
+        return this.chartData;
       }
 
       return this.chartData.filter(item => {
@@ -48,9 +42,8 @@ export default {
   },
   methods: {
     filterChartData() {
-
-      const labels = this.filteredChartData.map(item => item.date);
-      const data = this.filteredChartData.map(item => item.count);
+      const labels = this.filteredChartData.map(item => item.object_name);
+      const data = this.filteredChartData.map(item => item.violation_count);
 
       if (this.$refs.myChart) {
         this.$refs.myChart.chart.data.labels = labels;
@@ -58,10 +51,9 @@ export default {
         this.$refs.myChart.chart.update();
       }
     }
-
   },
   async mounted() {
-    const res = await axios.get("http://127.0.0.1:5000/violationsChar", {
+    const res = await axios.get("http://127.0.0.1:5000/objectsChar", {
       headers: {
         'Authorization': `Bearer ${this.$store.state.token}`
       }
@@ -69,15 +61,15 @@ export default {
     this.chartData = res.data;
     this.loaded = true;
 
-    // Создаем массив для меток (даты) и значений (количество нарушений)
-    const labels = this.chartData.map(item => item.date);
-    const data = this.chartData.map(item => item.count);
+    // Создаем массив для меток (названия объектов) и значений (количество нарушений)
+    const labels = this.chartData.map(item => item.object_name);
+    const data = this.chartData.map(item => item.violation_count);
 
     this.chart = {
       labels: labels,
       datasets: [
         {
-          label: 'Количество нарушений',
+          label: 'Количество нарушений на объектах',
           data: data,
           backgroundColor: 'rgba(75, 192, 192, 0.2)',
           borderColor: 'rgba(75, 192, 192, 1)',
@@ -86,23 +78,21 @@ export default {
       ]
     };
 
-    this.filterChartData();
-
     this.chartOptions = {
       responsive: true,
       plugins: {
         title: {
           display: true,
-          text: 'Количество нарушений по датам',
+          text: 'Количество нарушений на объектах',
           color: 'white',
           font: {
             size: 20
           }
-        }
-      },
-      legend: {
-        labels: {
-          color: 'white',
+        },
+        legend: {
+          labels: {
+            color: 'white',
+          }
         }
       },
       scales: {
@@ -118,13 +108,14 @@ export default {
         }
       }
     };
+
+    this.filterChartData();
   }
 }
 </script>
 
-<style>
-.date-inputs {
-  text-align: center;
-  margin-bottom: 20px;
+<style scoped>
+.main {
+  margin-top: 100px;
 }
 </style>

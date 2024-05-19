@@ -33,7 +33,7 @@ export default {
               localStorage.setItem('access_token', res.data.token);
               localStorage.setItem('user_id', res.data.userId);
               localStorage.setItem('user_role', res.data.user_role)
-              if (parseInt(localStorage.getItem('user_role')) === 2 || parseInt(localStorage.getItem('user_role')) === 3) {
+              if (parseInt(localStorage.getItem('user_role')) === 2 || parseInt(localStorage.getItem('user_role')) === 3 || parseInt(localStorage.getItem('user_role')) === 4) {
                 this.$router.push('/reports');
                 this.$store.dispatch('changeAuthStatus', true);
               } else {

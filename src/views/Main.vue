@@ -29,10 +29,29 @@ export default {
   },
   methods: {
     async fetchData() {
-      const res = await axios.get("http://127.0.0.1:5000/reports", {headers: {
-          'Authorization': `Bearer ${this.$store.state.token}`}})
-      this.reports = res.data
-      console.log(res.data)
+      const userId = localStorage.getItem('user_id'); // Получение user_id из localStorage
+      if (parseInt(localStorage.getItem('user_role')) === 2 || parseInt(localStorage.getItem('user_role')) === 3) {
+        const res = await axios.get("http://127.0.0.1:5000/reports",
+            {
+              headers: {
+                'Authorization': `Bearer ${this.$store.state.token}`
+              }
+            });
+        this.reports = res.data;
+        console.log(res.data);
+      } else {
+
+        const res = await axios.post("http://127.0.0.1:5000/reports/admin/",
+          { id: userId }, // Отправка user_id в теле запроса
+          {
+            headers: {
+              'Authorization': `Bearer ${this.$store.state.token}`
+            }
+          });
+      this.reports = res.data;
+        console.log(res.data);
+      }
+      console.log(userId);
     },
     searchReports(value) {
       this.search = value;

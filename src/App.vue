@@ -1,26 +1,23 @@
 <template>
-  <navbar/>
-  <div class="app">
-    <router-view/>
+  <div class="wrapper">
+    <navbar />
+    <div class="app">
+      <router-view />
+    </div>
+    <app-footer />
   </div>
-  <app-footer/>
-
 </template>
 
 <script>
-
-
-
 import Navbar from "@/components/Navbar.vue";
 import AppFooter from "@/components/Footer.vue";
 
 export default {
   components: {
     AppFooter,
-    Navbar
-  }
-
-}
+    Navbar,
+  },
+};
 </script>
 
 <style>
@@ -32,10 +29,19 @@ export default {
   font-family: 'Montserrat', sans-serif;
 }
 
-.app {
-  padding: 20px;
-  background: #1a1a1a;
+html, body {
+  height: 100%;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
   min-height: 100vh;
 }
 
+.app {
+  flex: 1;
+  padding: 20px;
+  background: #1a1a1a;
+}
 </style>
