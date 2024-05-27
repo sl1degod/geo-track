@@ -103,7 +103,7 @@ export default {
         const email = prompt("Введите адрес электронной почты:");
         if (email) {
           try {
-            await axios.post(`http://91.222.238.181:5000/reports/${this.$route.params.id}/sendEmail`, {email}, {
+            await axios.post(`http://91.222.238.181:5000/static/reports/${this.$route.params.id}/sendEmail`, {email}, {
               headers: {
                 'Authorization': `Bearer ${this.$store.state.token}`
               }
