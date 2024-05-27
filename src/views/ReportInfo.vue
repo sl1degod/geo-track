@@ -3,7 +3,7 @@
     <p style="color: white; text-align: center; font-size: 30px; margin-top: 50px;">Отчет о нарушении #{{ $route.params.id }}</p>
     <div class="container">
     <div class="image">
-      <img :src="'http://91.222.238.181:5000/reports/' + reports.violations_image">
+      <img :src="'http://91.222.238.181:5000/static/reports/' + reports.violations_image">
     </div>
       <div class="info">
       <div class="report-info">
@@ -103,7 +103,7 @@ export default {
         const email = prompt("Введите адрес электронной почты:");
         if (email) {
           try {
-            await axios.post(`http://91.222.238.181:5000/static/reports/${this.$route.params.id}/sendEmail`, {email}, {
+            await axios.post(`http://91.222.238.181:5000/reports/${this.$route.params.id}/sendEmail`, {email}, {
               headers: {
                 'Authorization': `Bearer ${this.$store.state.token}`
               }
