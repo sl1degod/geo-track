@@ -56,7 +56,7 @@ export default {
   methods: {
     async loadObjectData() {
       try {
-        const res = await axios.get(`http://127.0.0.1:5000/objects/${this.objectId}`, {
+        const res = await axios.get(`http://91.222.238.181/objects/${this.objectId}`, {
           headers: {
             'Authorization': `Bearer ${this.$store.state.token}`
           }
@@ -72,7 +72,7 @@ export default {
     },
     async changeData() {
       try {
-        await axios.put(`https://sl1degod.ru/objects/${this.objectId}`, {
+        await axios.put(`http://91.222.238.181/objects/${this.objectId}`, {
           name: this.name,
           latitude: this.latitude,
           longitude: this.longitude,
@@ -91,7 +91,7 @@ export default {
     },
     async fetchAdmins() {
       try {
-        const res = await axios.get("https://sl1degod.ru/users", {
+        const res = await axios.get("http://91.222.238.181/users", {
           headers: {
             'Authorization': `Bearer ${this.$store.state.token}`
           }});

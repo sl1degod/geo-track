@@ -38,7 +38,7 @@ export default {
   },
   methods: {
     async fetchData() {
-      const res = await axios.get("https://sl1degod.ru/objects", {
+      const res = await axios.get("http://91.222.238.181/objects", {
         headers: {
           'Authorization': `Bearer ${localStorage.access_token}`
         }

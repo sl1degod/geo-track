@@ -31,7 +31,7 @@ export default {
     async fetchData() {
       const userId = localStorage.getItem('user_id'); // Получение user_id из localStorage
       if (parseInt(localStorage.getItem('user_role')) === 2 || parseInt(localStorage.getItem('user_role')) === 3) {
-        const res = await axios.get("https://sl1degod.ru/reports",
+        const res = await axios.get("http://91.222.238.181/reports",
             {
               headers: {
                 'Authorization': `Bearer ${this.$store.state.token}`
@@ -41,7 +41,7 @@ export default {
         console.log(res.data);
       } else {
 
-        const res = await axios.post("https://sl1degod.ru/reports/admin/",
+        const res = await axios.post("http://91.222.238.181/reports/admin/",
           { id: userId }, // Отправка user_id в теле запроса
           {
             headers: {
