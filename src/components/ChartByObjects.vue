@@ -53,7 +53,7 @@ export default {
     }
   },
   async mounted() {
-    const res = await axios.get("http://91.222.238.181/objectsChar", {
+    const res = await axios.get("http://91.222.238.181:5000/objectsChar", {
       headers: {
         'Authorization': `Bearer ${this.$store.state.token}`
       }

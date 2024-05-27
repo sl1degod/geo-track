@@ -78,7 +78,7 @@ export default {
       this.password = ''
     },
     async fetchData() {
-      const res = await axios.get("http://91.222.238.181/posts", {headers: {
+      const res = await axios.get("http://91.222.238.181:5000/posts", {headers: {
           'Authorization': `Bearer ${this.$store.state.token}`}})
       this.posts = res.data
       console.log(this.posts)

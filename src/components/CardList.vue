@@ -8,7 +8,7 @@
          @click="$router.push(`/reports/${report.id}`)">
       <h3 style="margin-right: 20px; margin-left: 10px; width: 20px">{{ report.id }}</h3>
       <div class="image">
-        <img :src="'http://91.222.238.181/static/reports/' + report.violations_image"  alt="Изображение">
+        <img :src="'http://91.222.238.181:5000/static/reports/' + report.violations_image"  alt="Изображение">
       </div>
       <div class="card-info">
         <p>{{ report.object }}</p>

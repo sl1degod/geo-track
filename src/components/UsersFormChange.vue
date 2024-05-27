@@ -57,7 +57,7 @@ export default {
   },
   methods: {
     async changeData() {
-      await axios.put(`http://91.222.238.181/users/${this.userId}`,
+      await axios.put(`http://91.222.238.181:5000/users/${this.userId}`,
           {
             firstname: this.firstName,
             secondname: this.secondName,
@@ -75,7 +75,7 @@ export default {
       this.$emit('update:show', false)
     },
     async fetchData() {
-      const res = await axios.get("http://91.222.238.181/posts", {headers: {
+      const res = await axios.get("http://91.222.238.181:5000/posts", {headers: {
           'Authorization': `Bearer ${this.$store.state.token}`}})
       this.posts = res.data
       console.log(this.userId)
