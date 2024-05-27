@@ -71,7 +71,7 @@ export default {
       this.$emit('update:show', false)
     },
     async fetchData() {
-      const res = await axios.get("http://127.0.0.1:5000/users", {headers: {
+      const res = await axios.get("https://sl1degod.ru/users", {headers: {
           'Authorization': `Bearer ${this.$store.state.token}`}})
       this.admins = res.data
       console.log(this.admins)

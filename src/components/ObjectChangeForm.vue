@@ -72,7 +72,7 @@ export default {
     },
     async changeData() {
       try {
-        await axios.put(`http://127.0.0.1:5000/objects/${this.objectId}`, {
+        await axios.put(`https://sl1degod.ru/objects/${this.objectId}`, {
           name: this.name,
           latitude: this.latitude,
           longitude: this.longitude,
@@ -91,7 +91,7 @@ export default {
     },
     async fetchAdmins() {
       try {
-        const res = await axios.get("http://127.0.0.1:5000/users", {
+        const res = await axios.get("https://sl1degod.ru/users", {
           headers: {
             'Authorization': `Bearer ${this.$store.state.token}`
           }});

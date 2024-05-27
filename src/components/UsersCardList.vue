@@ -8,7 +8,7 @@
          :itemid="user.id"
          @click="openDialogForChangeData">
       <div class="img-container">
-        <img :src="'http://127.0.0.1:5000/static/users/' + user.uuid_image" alt="img">
+        <img :src="'https://sl1degod.ru/static/users/' + user.uuid_image" alt="img">
       </div>
       <p style="margin-top: 10px;">{{ user.secondname + " " + user.firstname }}</p>
       <p>Должность: {{ user.post }}</p>
@@ -61,7 +61,7 @@ export default {
         this.isVisibleForChange = true
         this.userId = event.currentTarget.getAttribute('itemid');
         console.log('Выбранный айди карточки:', this.userId);
-        const resUsers = await axios.get(`http://127.0.0.1:5000/users/${this.userId}`, {headers: {
+        const resUsers = await axios.get(`https://sl1degod.ru/users/${this.userId}`, {headers: {
             'Authorization': `Bearer ${this.$store.state.token}`}})
         this.clickedUser = resUsers.data
       } else {

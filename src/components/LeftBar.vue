@@ -1,7 +1,7 @@
 <template>
   <div class="left-container">
     <div class="user-img">
-      <img :src="`http://127.0.0.1:5000/static/users/`+ user.uuid_image"  alt="Изображение">
+      <img :src="`https://sl1degod.ru/static/users/`+ user.uuid_image"  alt="Изображение">
     </div>
     <div class="info-user">
       <p>{{ user.secondname + " " + user.firstname }}</p>
@@ -22,7 +22,7 @@ export default {
   },
   methods: {
     async fetchData() {
-      const res = await axios.get(`http://127.0.0.1:5000/users/${localStorage.getItem('user_id')}`, {headers: {
+      const res = await axios.get(`https://sl1degod.ru/users/${localStorage.getItem('user_id')}`, {headers: {
           'Authorization': `Bearer ${this.$store.state.token}`}})
       this.user = res.data
       console.log(res.data)

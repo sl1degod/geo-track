@@ -57,7 +57,7 @@ export default {
   },
   methods: {
     async changeData() {
-      await axios.put(`http://127.0.0.1:5000/users/${this.userId}`,
+      await axios.put(`https://sl1degod.ru/users/${this.userId}`,
           {
             firstname: this.firstName,
             secondname: this.secondName,
@@ -75,7 +75,7 @@ export default {
       this.$emit('update:show', false)
     },
     async fetchData() {
-      const res = await axios.get("http://127.0.0.1:5000/posts", {headers: {
+      const res = await axios.get("https://sl1degod.ru/posts", {headers: {
           'Authorization': `Bearer ${this.$store.state.token}`}})
       this.posts = res.data
       console.log(this.userId)

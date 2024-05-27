@@ -3,7 +3,7 @@
     <p style="color: white; text-align: center; font-size: 30px; margin-top: 50px;">Отчет о нарушении #{{ $route.params.id }}</p>
     <div class="container">
     <div class="image">
-      <img :src="'http://127.0.0.1:5000/static/reports/' + reports.violations_image">
+      <img :src="'https://sl1degod.ru/reports/' + reports.violations_image">
     </div>
       <div class="info">
       <div class="report-info">
@@ -43,7 +43,7 @@ export default {
   },
   methods: {
     async fetchData() {
-      const res = await axios.get("http://127.0.0.1:5000/reports/" + this.$route.params.id, {
+      const res = await axios.get("https://sl1degod.ru/reports/" + this.$route.params.id, {
         headers: {
           'Authorization': `Bearer ${this.$store.state.token}`
         }
@@ -55,7 +55,7 @@ export default {
       if (parseInt(localStorage.getItem('user_role')) === 2 || parseInt(localStorage.getItem('user_role')) === 3) {
 
         axios
-            .get("http://127.0.0.1:5000/reportsAct/" + this.$route.params.id, {
+            .get("https://sl1degod.ru/reportsAct/" + this.$route.params.id, {
               headers: {
                 'Authorization': 'Bearer ' + this.$store.state.token
               },
@@ -77,7 +77,7 @@ export default {
     async deleteVio() {
       if (parseInt(localStorage.getItem('user_role')) === 2 || parseInt(localStorage.getItem('user_role')) === 3) {
 
-        await axios.delete("http://127.0.0.1:5000/reports/" + this.$route.params.id, {
+        await axios.delete("https://sl1degod.ru/reports/" + this.$route.params.id, {
           headers: {
             'Authorization': `Bearer ${this.$store.state.token}`
           }
@@ -88,7 +88,7 @@ export default {
     },
 
     async changeStatusVio() {
-      await axios.patch("http://127.0.0.1:5000/reports/" + this.$route.params.id, {status: 'Устранено'}, {
+      await axios.patch("https://sl1degod.ru/reports/" + this.$route.params.id, {status: 'Устранено'}, {
         headers: {
           'Authorization': `Bearer ${this.$store.state.token}`
         }
@@ -103,7 +103,7 @@ export default {
         const email = prompt("Введите адрес электронной почты:");
         if (email) {
           try {
-            await axios.post(`http://127.0.0.1:5000/reports/${this.$route.params.id}/sendEmail`, {email}, {
+            await axios.post(`https://sl1degod.ru/reports/${this.$route.params.id}/sendEmail`, {email}, {
               headers: {
                 'Authorization': `Bearer ${this.$store.state.token}`
               }

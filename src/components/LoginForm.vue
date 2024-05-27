@@ -26,7 +26,7 @@ export default {
   },
   methods: {
     login() {
-      axios.post('http://127.0.0.1:5000/login', {login: this.loginUser, password: this.passwordUser})
+      axios.post('https://sl1degod.ru/login', {login: this.loginUser, password: this.passwordUser})
           .then(res => {
             if (res.data.token) {
               this.$store.commit('setToken', res.data.token);

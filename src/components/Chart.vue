@@ -61,7 +61,7 @@ export default {
 
   },
   async mounted() {
-    const res = await axios.get("http://127.0.0.1:5000/violationsChar", {
+    const res = await axios.get("https://sl1degod.ru/violationsChar", {
       headers: {
         'Authorization': `Bearer ${this.$store.state.token}`
       }
