@@ -16,10 +16,10 @@
         <p>Статус: {{reports.status}}</p>
         <p>Дата составления: {{reports.date}}, {{ reports.time }}</p>
         <div class="btn">
-          <button @click="download">Сформировать акт</button>
-          <button @click="sendEmail" style="margin-left: 20px;">Отправить по почте</button>
-          <button @click="changeStatusVio" style="margin-left: 20px;">Устранено</button>
-          <button @click="deleteVio" style="margin-left: 20px;">Удалить нарушение</button>
+          <button @click="download" v-show="isVisible">Сформировать акт</button>
+          <button @click="sendEmail" v-show="isVisible">Отправить по почте</button>
+          <button @click="changeStatusVio">Устранено</button>
+          <button @click="deleteVio" v-show="isVisible">Удалить нарушение</button>
         </div>
       </div>
       </div>
@@ -34,7 +34,8 @@ export default {
   name: "report-info-view",
   data() {
     return {
-      reports: []
+      reports: [],
+      isVisible: false
     }
   },
   components: {
@@ -51,33 +52,39 @@ export default {
       console.log(res.data)
     },
     async download() {
-      axios
-          .get("http://127.0.0.1:5000/reportsAct/" + this.$route.params.id, {
-            headers: {
-              'Authorization': 'Bearer ' + this.$store.state.token
-            },
-            responseType: 'blob'
-          })
-          .then(response => {
-            const url = window.URL.createObjectURL(response.data);
-            const link = document.createElement('a');
-            link.href = url;
-            link.setAttribute('download', 'act.docx'); // Указываем имя файла для скачивания
-            link.click();
-            window.URL.revokeObjectURL(url);
-          })
-          .catch(error => {
-            console.error('Ошибка при скачивании файла:', error);
-          });
+      if (parseInt(localStorage.getItem('user_role')) === 2 || parseInt(localStorage.getItem('user_role')) === 3) {
+
+        axios
+            .get("http://127.0.0.1:5000/reportsAct/" + this.$route.params.id, {
+              headers: {
+                'Authorization': 'Bearer ' + this.$store.state.token
+              },
+              responseType: 'blob'
+            })
+            .then(response => {
+              const url = window.URL.createObjectURL(response.data);
+              const link = document.createElement('a');
+              link.href = url;
+              link.setAttribute('download', 'act.docx'); // Указываем имя файла для скачивания
+              link.click();
+              window.URL.revokeObjectURL(url);
+            })
+            .catch(error => {
+              console.error('Ошибка при скачивании файла:', error);
+            });
+      }
     },
     async deleteVio() {
-      await axios.delete("http://127.0.0.1:5000/reports/" + this.$route.params.id, {
-        headers: {
-          'Authorization': `Bearer ${this.$store.state.token}`
-        }
-      })
-      alert("Удаление прошло успешно")
-      this.$router.push('/reports');
+      if (parseInt(localStorage.getItem('user_role')) === 2 || parseInt(localStorage.getItem('user_role')) === 3) {
+
+        await axios.delete("http://127.0.0.1:5000/reports/" + this.$route.params.id, {
+          headers: {
+            'Authorization': `Bearer ${this.$store.state.token}`
+          }
+        })
+        alert("Удаление прошло успешно")
+        this.$router.push('/reports');
+      }
     },
 
     async changeStatusVio() {
@@ -91,26 +98,36 @@ export default {
     },
 
     async sendEmail() {
-      const email = prompt("Введите адрес электронной почты:");
-      if (email) {
-        try {
-          await axios.post(`http://127.0.0.1:5000/reports/${this.$route.params.id}/sendEmail`, {email},{
-            headers: {
-              'Authorization': `Bearer ${this.$store.state.token}`
-            }
-          });
-          alert("Документ успешно отправлен на указанный адрес: " + email);
-        } catch (error) {
-          console.error('Ошибка при отправке по почте:', error);
+      if (parseInt(localStorage.getItem('user_role')) === 2 || parseInt(localStorage.getItem('user_role')) === 3) {
+
+        const email = prompt("Введите адрес электронной почты:");
+        if (email) {
+          try {
+            await axios.post(`http://127.0.0.1:5000/reports/${this.$route.params.id}/sendEmail`, {email}, {
+              headers: {
+                'Authorization': `Bearer ${this.$store.state.token}`
+              }
+            });
+            alert("Документ успешно отправлен на указанный адрес: " + email);
+          } catch (error) {
+            console.error('Ошибка при отправке по почте:', error);
+          }
         }
       }
+    },
+
+    async showDialog() {
+      this.isVisible = true
     }
 
 
   },
     mounted() {
-    this.fetchData();
-  }
+      this.fetchData();
+      if (parseInt(localStorage.getItem('user_role')) === 2 || parseInt(localStorage.getItem('user_role')) === 3) {
+        this.showDialog()
+      }
+    }
 
 }
 </script>
@@ -140,8 +157,8 @@ export default {
 
 .image {
   margin-top: 50px;
-  height: 35%;
-  width: 35%;
+  height: 50%;
+  width: 50%;
   object-fit: cover;
   border-radius: 8px;
 }
@@ -154,5 +171,12 @@ p {
 
 button {
   width: 200px;
+}
+
+.btn {
+  width: 450px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
 </style>
