@@ -22,7 +22,7 @@ export default {
   },
   methods: {
     async fetchData() {
-      const res = await axios.get(`http://91.222.238.181:5000/users/${localStorage.getItem('user_id')}`, {headers: {
+      const res = await axios.get(`http://127.0.0.1:5000/users/${localStorage.getItem('user_id')}`, {headers: {
           'Authorization': `Bearer ${this.$store.state.token}`}})
       this.user = res.data
       console.log(res.data)

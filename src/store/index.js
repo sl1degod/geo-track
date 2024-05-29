@@ -45,21 +45,21 @@ export default createStore({
   },
   actions: {
     async fetchObjects({ commit }, token) {
-      const res = await axios.get("http://91.222.238.181:5000/objects", {headers: {
+      const res = await axios.get("http://127.0.0.1:5000/objects", {headers: {
           'Authorization': `Bearer ${localStorage.getItem('access_token')}`}})
       commit('setObjects', res.data);
       console.log("11" + token)
     },
 
     async getUsers({ commit }, token) {
-      const res = await axios.get("http://91.222.238.181:5000/users", {headers: {
+      const res = await axios.get("http://127.0.0.1:5000/users", {headers: {
           'Authorization': `Bearer ${localStorage.getItem('access_token')}`}})
       commit('setUser', res.data);
       console.log("11" + token)
     },
 
     async createObject({ commit, dispatch }, {newObject, token}) {
-      const res = await axios.post("http://91.222.238.181:5000/objects", newObject ,{
+      const res = await axios.post("http://127.0.0.1:5000/objects", newObject ,{
         headers: {
           'Authorization': `Bearer ${token}`}});
       commit('addObject', res.data);
@@ -67,7 +67,7 @@ export default createStore({
     },
 
     async createUser({ commit, dispatch }, {newUser, token}) {
-      const res = await axios.post("http://91.222.238.181:5000/users", newUser ,{
+      const res = await axios.post("http://127.0.0.1:5000/users", newUser ,{
         headers: {
           'Authorization': `Bearer ${token}`}});
       commit('addUser', res.data);
